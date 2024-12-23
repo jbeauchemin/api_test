@@ -23,9 +23,9 @@ class AuthService {
       throw AlfredException(401, 'Invalid credentials');
     }
 
-    final token = Token.generateToken(user['id'].toString());
+    final token = Token.generateToken({'id': user['id']});
 
-    return res.json({'token': token.toString()});
+    res.json({'token': token});
   }
 
   void register(HttpRequest req, HttpResponse res) async {

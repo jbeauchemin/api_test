@@ -1,13 +1,16 @@
 import 'package:corsac_jwt/corsac_jwt.dart';
 
-const signature = 'nasjiodnsajdnaslo;dn;as';
+const signature = 'jesuisunsecret';
 
 class Token {
-  static String generateToken(String kid) {
-    final builder = new JWTBuilder();
+  static String generateToken(Map<String, dynamic> data) {
+    final token = JWTBuilder()
+      ..expiresAt = DateTime.now().add(Duration(days: 1))
+      ..setClaim('data', data)
+      ..getToken();
 
-    final signer = new JWTHmacSha256Signer(signature, kid: kid);
-    final signedToken = builder.getSignedToken(signer);
+    final signer = JWTHmacSha256Signer(signature);
+    final signedToken = token.getSignedToken(signer);
 
     return signedToken.toString();
   }
@@ -15,10 +18,10 @@ class Token {
   static bool verifyToken(String token) {
     try {
       final jwt = JWT.parse(token);
-
+      print(jwt);
       final isValid =
           JWTValidator().validate(jwt, signer: JWTHmacSha256Signer(signature));
-
+      print(isValid);
       return isValid.isNotEmpty;
     } catch (e) {
       return false;
