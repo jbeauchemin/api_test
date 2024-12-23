@@ -1,0 +1,10 @@
+name : api_dart
+
+environment:
+  sdk: ^3.5.2
+
+dependencies:
+  alfred: ^1.1.1
+  corsac_jwt: ^1.0.1
+  dbcrypt: ^2.0.0
+  get_it: ^8.0.3
